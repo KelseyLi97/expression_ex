@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style>
+.button {
+    margin-right: 10px;
+}
+#div1 {
+    width: 500px;
+    height: 30px;
+    border: 1px solid #aaaaaa;
+    overflow: hidden;
+    white-space: nowrap;
+}
+#div2 {
+    width: 20px;
+    height: 15px;
+    border: 1px solid #aaaaaa;
+    display: inline-block;
+    margin-right: 10px;
+}
+</style>
+
+<script>
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    /*
+    P.S. The extra credit part (chain expression) can be done by dragging one
+    button on top of another existing button
+    */
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    // copy the button and append
+    var copyData = document.getElementById(data).cloneNode(true);
+    copyData.id = "newData";
+    ev.target.appendChild(copyData);
+    // append certain numbers of divs
+    var num = 0;
+    switch (data) {
+        case "add":
+    	  case "subtract":
+      		  num = 2;
+            break;
+        case "foo":
+          	num = 3;
+        	  break;
+     	  case "doSomethingComplicated":
+          	num = 1;
+        	  break;
+     	  default:
+          	break;
+    }
+    for (i = 0; i < num; ++i ) {
+        var elem = document.createElement('div');
+	      elem.setAttribute("id", "div2")
+	      ev.target.appendChild(elem);
+    }
+}
+</script>
+</head>
+
+<body>
+<center>
+<h2>Expression</h2>
+<text>by Maojingjing Li</text>
+
+<p>
+
+<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+<p>
+
+<button class="button" id="add" draggable="true" ondragstart="drag(event)">add</button>
+<button class="button" id="subtract" draggable="true" ondragstart="drag(event)">subtract</button>
+<button class="button" id="foo" draggable="true" ondragstart="drag(event)">foo</button>
+<button class="button" id="doSomethingComplicated" draggable="true" ondragstart="drag(event)">doSomethingComplicated</button>
+
+</center>
+</body>
+</html>
